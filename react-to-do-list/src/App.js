@@ -56,7 +56,6 @@ class App extends Component {
         </div>
 
         <div className="list center">
-          <button onClick={()=>{this.getAllTheTasks()}} >This is a Button </button>
           {this.showTasks()}
         </div>
       </div>
