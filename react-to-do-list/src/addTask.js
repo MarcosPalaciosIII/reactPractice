@@ -23,6 +23,7 @@ class AddTask extends Component {
     })
     .then(res => {
       console.log(res);
+      this.props.blah();
     })
     .catch(err => {
       console.log(err);

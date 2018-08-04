@@ -13,6 +13,13 @@ class App extends Component {
     };
   }
 
+  addOneTask(taskToAdd) {
+    console.log("adding one task!!!!!");
+    const currentArray = this.state.theTasks.slice();
+    currentArray.push(taskToAdd);
+    this.setState({theTasks: currentArray});
+  }
+
   getAllTheTasks(){
     axios.get("http://localhost:5000/api/tasks")
     .then(allTheTasks => {
@@ -45,7 +52,7 @@ class App extends Component {
         <h1> The Greatest Sing To Do List of All Time </h1>
         </div>
         <div className="add" >
-          <AddTask></AddTask>
+          <AddTask blah={() =>this.getAllTheTasks()}></AddTask>
         </div>
 
         <div className="list center">
