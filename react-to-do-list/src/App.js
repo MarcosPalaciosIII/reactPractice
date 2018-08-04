@@ -43,29 +43,12 @@ class App extends Component {
     }
   }
 
-  renderForm(theIndex) {
+  renderForm(theIndex, theTaskID) {
     if(this.state.showing === theIndex) {
       return(
 
-        <EditTask taskProp={theTaskID}></EditTask>
+        <EditTask blah={() =>this.getAllTheTasks()} taskProp={theTaskID}></EditTask>
       )
-      // return (
-      //   <div className="edit-task center" >
-      //     <h3> Edit This Task </h3>
-      //
-      //     <label> Title </label>
-      //     <input type="text" value={this.state.titleInput} onChange={(e) =>{this.updateTitle(e)}} />
-      //
-      //     <br />
-      //
-      //     <label> Description </label>
-      //     <input type="text" value={this.state.descriptionInput} onChange={(e) =>{this.updateDescription(e)}} />
-      //
-      //     <br />
-      //
-      //     <button onClick={()=>{this.editTask()}} > Save Change </button>
-      //   </div>
-      // )
     }
   }
 
@@ -83,10 +66,9 @@ class App extends Component {
               <button onClick={()=>this.toggleEditForm(index)} style={{float:'right', backgroundColor:'maroon', color:'aqua', padding:'5px'}}> Edit Task </button>
               <h3>{task.title}</h3>
               <p>{task.description}</p>
-              {this.renderForm(index, task._id)}
             </div>
             <div className="center">
-              {this.renderForm(index)}
+              {this.renderForm(index, task._id)}
             </div>
           </div>
         )
