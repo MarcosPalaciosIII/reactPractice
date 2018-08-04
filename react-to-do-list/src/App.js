@@ -27,7 +27,7 @@ class App extends Component {
     axios.get("http://localhost:5000/api/tasks")
     .then(allTheTasks => {
       console.log(allTheTasks);
-      this.setState({theTasks: allTheTasks.data, showing: this.state.showing});
+      this.setState({theTasks: allTheTasks.data, showing: false});
     })
     .catch(err => {
       console.log(err);
@@ -43,11 +43,11 @@ class App extends Component {
     }
   }
 
-  renderForm(theIndex, theTaskID) {
+  renderForm(theIndex, theTaskID, theTitle, theDescription) {
     if(this.state.showing === theIndex) {
       return(
 
-        <EditTask blah={() =>this.getAllTheTasks()} taskProp={theTaskID}></EditTask>
+        <EditTask blah={() =>this.getAllTheTasks()} taskProp={theTaskID} title={theTitle} description={theDescription}></EditTask>
       )
     }
   }
@@ -62,13 +62,14 @@ class App extends Component {
       this.state.theTasks.map((task, index) => {
         return(
           <div key={index} className="allTasks">
+
             <div className="center">
               <button onClick={()=>this.toggleEditForm(index)} style={{float:'right', backgroundColor:'maroon', color:'aqua', padding:'5px'}}> Edit Task </button>
               <h3>{task.title}</h3>
               <p>{task.description}</p>
             </div>
             <div className="center">
-              {this.renderForm(index, task._id)}
+            {this.renderForm(index, task._id, task.title, task.description)}
             </div>
           </div>
         )

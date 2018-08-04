@@ -5,8 +5,8 @@ class EditTask extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      titleInput: '',
-      descriptionInput: '',
+      titleInput: this.props.title,
+      descriptionInput: this.props.description,
     };
   }
 
