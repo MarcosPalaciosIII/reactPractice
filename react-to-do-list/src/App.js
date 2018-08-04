@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
+import AddTask from './addTask';
 
 class App extends Component {
 
@@ -27,7 +28,7 @@ class App extends Component {
     return (
       this.state.theTasks.reverse().map((task, index) => {
         return(
-          <div key={index}>
+          <div key={index} className="center" >
             <h3>{task.title}</h3>
             <p>{task.description}</p>
           </div>
@@ -38,13 +39,43 @@ class App extends Component {
 
   render() {
     return (
-      <div class="center" >
+
+      <div className="app" >
+        <div className="center">
         <h1> The Greatest Sing To Do List of All Time </h1>
-        <button onClick={()=>{this.getAllTheTasks()}} >This is a Button </button>
-        {this.showTasks()}
+        </div>
+        <div className="add" >
+          <AddTask></AddTask>
+        </div>
+
+        <div className="list center">
+          <button onClick={()=>{this.getAllTheTasks()}} >This is a Button </button>
+          {this.showTasks()}
+        </div>
       </div>
     );
   }
 }
+
+// class AddTask extends Component {
+//
+//   render() {
+//     return (
+//       <div className="add-task" >
+//         <h3> Add A New Task </h3>
+//
+//         <label> Title </label>
+//         <input type="text"></input>
+//
+//         <br />
+//
+//         <label> Description </label>
+//         <input type="text"> </input>
+//
+//         <button type="submit"> Submit </button>
+//       </div>
+//     )
+//   }
+// }
 
 export default App;

@@ -5,6 +5,22 @@ body {
 }
 button {
   background-color: aqua;
+  font-size: 30px;
+  padding: 5px;
+  color: maroon;
+}
+
+button:hover {
+  border-color: darkgreen;
+  box-shadow: 3px 3px 3px 3px orange;
+}
+
+button:active {
+  box-shadow: 3px 3px 3px 3px maroon;
+}
+
+.app {
+  padding: 20px;
 }
 
 .center {
@@ -12,4 +28,12 @@ button {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+.list {
+  float: left;
+}
+
+.add {
+  float: right;
 }
