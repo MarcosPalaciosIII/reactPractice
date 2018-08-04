@@ -61,7 +61,7 @@ updateDescription(e) {
 
         <br />
 
-        <button onClick={()=>{this.addTask()}}> Submit </button>
+        <button className="addTaskButton" onClick={()=>{this.addTask()}}> Submit </button>
       </div>
     )
   }

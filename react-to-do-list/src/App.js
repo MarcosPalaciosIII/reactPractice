@@ -31,15 +31,21 @@ class App extends Component {
     });
   }
 
+  toggleEditForm(whichTask) {
+    console.log(whichTask);
+  }
+
   showTasks() {
     if(this.state.theTasks.length === 0) {
       this.getAllTheTasks();
     }
 
+
     return (
       this.state.theTasks.reverse().map((task, index) => {
         return(
           <div key={index} className="center" >
+            <button onClick={()=>this.toggleEditForm(index)} style={{float:'right', backgroundColor:'maroon', color:'aqua'}}> Edit Task </button>
             <h3>{task.title}</h3>
             <p>{task.description}</p>
           </div>
@@ -55,6 +61,7 @@ class App extends Component {
         <div className="center">
         <h1> The Greatest Sing To Do List of All Time </h1>
         </div>
+
         <div className="add" >
           <AddTask blah={() =>this.getAllTheTasks()}></AddTask>
         </div>

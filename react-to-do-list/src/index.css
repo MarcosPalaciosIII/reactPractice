@@ -3,19 +3,19 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
-button {
+.addTaskButton {
   background-color: aqua;
   font-size: 30px;
   padding: 5px;
   color: maroon;
 }
 
-button:hover {
+.addTaskButton:hover {
   border-color: darkgreen;
   box-shadow: 3px 3px 3px 3px orange;
 }
 
-button:active {
+.addTaskButton:active {
   box-shadow: 3px 3px 3px 3px maroon;
 }
 
