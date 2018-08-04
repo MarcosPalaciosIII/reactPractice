@@ -10,7 +10,7 @@ router.get('/tasks', (req, res, next) => {
     })
     .catch((err)=>{
         res.json(err);
-    })
+    });
 });
 
 router.post('/tasks/create', (req, res, next)=>{
@@ -20,25 +20,41 @@ router.post('/tasks/create', (req, res, next)=>{
         doneyet: req.body.doneyet
     })
     .then((response)=>{
-        res.json(response)
+        res.json(response);
     })
     .catch((err)=>{
         res.json(err);
-    })
-})
+    });
+});
 
 
-/// task details route here 
+/// task details route here
 
 
 
 
 /// edit task route here
-
+router.post('/tasks/edit/:id', (req, res, next) => {
+  Task.findByIdAndUpdate(req.params.id, req.body)
+  .then(response => {
+    res.json(response);
+  })
+  .catch(err => {
+    res.json(err);
+  });
+});
 
 
 // delete task route
-
+router.delete('/tasks/delete/:id', (req, res, next) => {
+  Task.findByIdAndRemove(req.params.id)
+  .then(response => {
+    res.json(response);
+  })
+  .catch(err => {
+    res.json(err);
+  });
+});
 
 
 

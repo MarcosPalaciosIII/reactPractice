@@ -3,13 +3,16 @@ import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
 import AddTask from './addTask';
+import EditTask from './editTask';
+
 
 class App extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      theTasks: []
+      theTasks: [],
+      showing: false,
     };
   }
 
@@ -24,15 +27,46 @@ class App extends Component {
     axios.get("http://localhost:5000/api/tasks")
     .then(allTheTasks => {
       console.log(allTheTasks);
-      this.setState({theTasks: allTheTasks.data});
+      this.setState({theTasks: allTheTasks.data, showing: this.state.showing});
     })
     .catch(err => {
       console.log(err);
     });
   }
 
+
   toggleEditForm(whichTask) {
-    console.log(whichTask);
+    if(this.state.showing === whichTask) {
+        this.setState({theTasks: this.state.theTasks, showing: false});
+    } else {
+      this.setState({theTasks: this.state.theTasks, showing: whichTask});
+    }
+  }
+
+  renderForm(theIndex) {
+    if(this.state.showing === theIndex) {
+      return(
+
+        <EditTask taskProp={theTaskID}></EditTask>
+      )
+      // return (
+      //   <div className="edit-task center" >
+      //     <h3> Edit This Task </h3>
+      //
+      //     <label> Title </label>
+      //     <input type="text" value={this.state.titleInput} onChange={(e) =>{this.updateTitle(e)}} />
+      //
+      //     <br />
+      //
+      //     <label> Description </label>
+      //     <input type="text" value={this.state.descriptionInput} onChange={(e) =>{this.updateDescription(e)}} />
+      //
+      //     <br />
+      //
+      //     <button onClick={()=>{this.editTask()}} > Save Change </button>
+      //   </div>
+      // )
+    }
   }
 
   showTasks() {
@@ -42,12 +76,18 @@ class App extends Component {
 
 
     return (
-      this.state.theTasks.reverse().map((task, index) => {
+      this.state.theTasks.map((task, index) => {
         return(
-          <div key={index} className="center" >
-            <button onClick={()=>this.toggleEditForm(index)} style={{float:'right', backgroundColor:'maroon', color:'aqua', padding:'5px'}}> Edit Task </button>
-            <h3>{task.title}</h3>
-            <p>{task.description}</p>
+          <div key={index} className="allTasks">
+            <div className="center">
+              <button onClick={()=>this.toggleEditForm(index)} style={{float:'right', backgroundColor:'maroon', color:'aqua', padding:'5px'}}> Edit Task </button>
+              <h3>{task.title}</h3>
+              <p>{task.description}</p>
+              {this.renderForm(index, task._id)}
+            </div>
+            <div className="center">
+              {this.renderForm(index)}
+            </div>
           </div>
         )
       })

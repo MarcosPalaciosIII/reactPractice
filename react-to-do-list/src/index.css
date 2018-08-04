@@ -3,6 +3,13 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.allTasks {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 .addTaskButton {
   background-color: aqua;
   font-size: 30px;
