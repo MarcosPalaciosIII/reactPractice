@@ -52,6 +52,17 @@ class App extends Component {
     }
   }
 
+  deleteTask(theIdOfTheTask) {
+    axios.delete(`http://localhost:5000/api/tasks/delete/${theIdOfTheTask}`, {})
+    .then(res => {
+      console.log(res);
+      this.getAllTheTasks();
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }
+
   showTasks() {
     if(this.state.theTasks.length === 0) {
       this.getAllTheTasks();
@@ -63,12 +74,16 @@ class App extends Component {
         return(
           <div key={index} className="allTasks">
 
-            <div className="center">
-              <button onClick={()=>this.toggleEditForm(index)} style={{float:'right', backgroundColor:'maroon', color:'aqua', padding:'5px'}}> Edit Task </button>
+            <div className="center taskInfo">
+              <div>
+                <button onClick={()=>this.deleteTask(task._id)} style={{float:'right', backgroundColor:'maroon', color:'aqua', padding:'5px', marginLeft:'5px'}}> Edit Task </button>
+                <button onClick={()=>this.toggleEditForm(index)} style={{float:'right', backgroundColor:'lightgreen', color:'maroon', padding:'5px'}}> Edit Task </button>
+              </div>
               <h3>{task.title}</h3>
               <p>{task.description}</p>
             </div>
-            <div className="center">
+            <hr />
+            <div className="center taskEdit">
             {this.renderForm(index, task._id, task.title, task.description)}
             </div>
           </div>

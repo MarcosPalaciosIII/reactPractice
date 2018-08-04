@@ -4,11 +4,16 @@ body {
   font-family: sans-serif;
 }
 
+.add-task {
+  padding-right: 50px;
+}
+
 .allTasks {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   width: 100%;
+  height: 190px;
 }
 
 .addTaskButton {
@@ -40,9 +45,19 @@ body {
 
 .list {
   float: left;
-  width: 35vw;
+  width: 45vw;
 }
 
 .add {
   float: right;
+}
+
+.taskInfo {
+  float: left;
+  width: 49%
+}
+
+.taskEdit {
+  float: right;
+  width: 49%
 }
