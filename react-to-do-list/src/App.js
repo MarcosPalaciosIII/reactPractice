@@ -32,6 +32,10 @@ class App extends Component {
   }
 
   showTasks() {
+    if(this.state.theTasks.length === 0) {
+      this.getAllTheTasks();
+    }
+    
     return (
       this.state.theTasks.reverse().map((task, index) => {
         return(
