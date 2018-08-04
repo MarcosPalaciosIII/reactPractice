@@ -45,7 +45,7 @@ class App extends Component {
       this.state.theTasks.reverse().map((task, index) => {
         return(
           <div key={index} className="center" >
-            <button onClick={()=>this.toggleEditForm(index)} style={{float:'right', backgroundColor:'maroon', color:'aqua'}}> Edit Task </button>
+            <button onClick={()=>this.toggleEditForm(index)} style={{float:'right', backgroundColor:'maroon', color:'aqua', padding:'5px'}}> Edit Task </button>
             <h3>{task.title}</h3>
             <p>{task.description}</p>
           </div>
