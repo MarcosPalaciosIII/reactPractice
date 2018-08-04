@@ -64,25 +64,5 @@ class App extends Component {
   }
 }
 
-// class AddTask extends Component {
-//
-//   render() {
-//     return (
-//       <div className="add-task" >
-//         <h3> Add A New Task </h3>
-//
-//         <label> Title </label>
-//         <input type="text"></input>
-//
-//         <br />
-//
-//         <label> Description </label>
-//         <input type="text"> </input>
-//
-//         <button type="submit"> Submit </button>
-//       </div>
-//     )
-//   }
-// }
 
 export default App;
