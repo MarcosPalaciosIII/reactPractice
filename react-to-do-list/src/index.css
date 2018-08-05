@@ -12,7 +12,7 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  width: 100%;
+  width: 40%;
   height: 190px;
 }
 
@@ -45,7 +45,9 @@ body {
 
 .list {
   float: left;
-  width: 45vw;
+  width: 80vw;
+  display: flex;
+  flex-flow: row wrap;
 }
 
 .add {

@@ -76,7 +76,7 @@ class App extends Component {
 
             <div className="center taskInfo">
               <div>
-                <button onClick={()=>this.deleteTask(task._id)} style={{float:'right', backgroundColor:'maroon', color:'aqua', padding:'5px', marginLeft:'5px'}}> Edit Task </button>
+                <button onClick={()=>this.deleteTask(task._id)} style={{float:'right', backgroundColor:'maroon', color:'aqua', padding:'5px', marginLeft:'5px'}}> Delete Task </button>
                 <button onClick={()=>this.toggleEditForm(index)} style={{float:'right', backgroundColor:'lightgreen', color:'maroon', padding:'5px'}}> Edit Task </button>
               </div>
               <h3>{task.title}</h3>
@@ -96,18 +96,27 @@ class App extends Component {
     return (
 
       <div className="app" >
+
         <div className="center">
-        <h1> The Greatest Sing To Do List of All Time </h1>
+          <h1> The Greatest Sing To Do List of All Time </h1>
         </div>
 
         <div className="add" >
           <AddTask blah={() =>this.getAllTheTasks()}></AddTask>
         </div>
 
-        <div className="list center">
-          <h2> The To Do List </h2>
-          {this.showTasks()}
+        <div>
+
+          <div className="center">
+            <h2> The To Do List </h2>
+          </div>
+
+          <div className="list center">
+            {this.showTasks()}
+          </div>
+
         </div>
+
       </div>
     );
   }
