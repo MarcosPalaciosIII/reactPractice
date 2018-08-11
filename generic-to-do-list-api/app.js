@@ -13,15 +13,16 @@ const LocalStrategy = require('passport-local').Strategy;
 const session    = require('express-session');
 const passport     = require('passport');
 
+require('./config/passport');
 
 
 mongoose.Promise = Promise;
 mongoose
   .connect('mongodb://localhost/the-to-do-list-api', {useMongoClient: true})
   .then(() => {
-    console.log('Connected to Mongo!')
+    console.log('Connected to Mongo!');
   }).catch(err => {
-    console.error('Error connecting to mongo', err)
+    console.error('Error connecting to mongo', err);
   });
 
 const app_name = require('./package.json').name;
@@ -59,7 +60,7 @@ app.use(cors());
 const index = require('./routes/index');
 app.use('/', index);
 
-const taskRoutes = require('./routes/tasks')
+const taskRoutes = require('./routes/tasks');
 app.use('/api', taskRoutes);
 
 
