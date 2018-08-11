@@ -63,3 +63,11 @@ body {
   float: right;
   width: 49%
 }
+
+.logIn-signUp-button {
+  background-color: forestgreen;
+  font-size: 30px;
+  padding: 5px;
+  color: maroon;
+  border-radius: 45%;
+}

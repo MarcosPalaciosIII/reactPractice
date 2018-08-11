@@ -9,6 +9,7 @@ class User extends Component {
     this.state = {
       usernameInput: '',
       passwordInput: '',
+      loggedInUser: null,
     };
   }
 
@@ -34,7 +35,29 @@ class User extends Component {
     const password = this.state.passwordInput;
     axios.post('http://localhost:5000/api/login', {username, password}, {withcredentials: true})
     .then((response) => {
-      console.log(response);
+      this.setState({
+        usernameInput: this.state.usernameInput,
+        passwordInput: this.state.passwordInput,
+        loggedInUser: response.data,
+      });
+
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+
+  signup(){
+    const username = this.state.usernameInput;
+    const password = this.state.passwordInput;
+    axios.post('http://localhost:5000/api/signup', {username, password}, {withcredentials: true})
+    .then((response) => {
+      this.setState({
+        usernameInput: this.state.usernameInput,
+        passwordInput: this.state.passwordInput,
+        loggedInUser: response.data,
+      });
+
     })
     .catch((err) => {
       console.log(err);
@@ -42,20 +65,28 @@ class User extends Component {
   }
 
 
+
+  showUser(){
+    return this.state.loggedInUser ? `Welcome, ${this.state.loggedInUser.username}` : "User Component";
+  }
+
+
   render(){
     return(
-      <div>
+      <div className="add-task center">
 
-        <h3> User Component </h3>
+        <h3> {this.showUser()} </h3>
 
-        {/*<div> Username Here </div>*/}
+        {/* <div> Username Here </div> */}
 
         <labal> Username </labal>
         <input type="text" value={this.state.usernameInput} onChange={(e)=>{this.updateUsername(e)}} />
+        <br />
         <labal> Password </labal>
         <input type="password" value={this.state.passwordInput} onChange={(e)=>{this.updatePassword(e)}} />
-
-        <button onClick={()=>{this.login()}}> Log In </button>
+        <br />
+        <button onClick={()=>{this.login()}} className="logIn-signUp-button"> Log In </button>
+        <button onClick={()=>{this.signup()}} className="logIn-signUp-button"> Sign Up </button>
 
       </div>
     )
