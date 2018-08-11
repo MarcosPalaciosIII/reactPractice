@@ -66,8 +66,16 @@ body {
 
 .logIn-signUp-button {
   background-color: forestgreen;
-  font-size: 30px;
+  font-size: 20px;
   padding: 5px;
   color: maroon;
+  border-radius: 45%;
+}
+
+.logOutButton {
+  background-color: maroon;
+  font-size: 20px;
+  padding: 5px;
+  color: lightgreen;
   border-radius: 45%;
 }

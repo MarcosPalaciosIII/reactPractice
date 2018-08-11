@@ -33,7 +33,7 @@ class User extends Component {
   login(){
     const username = this.state.usernameInput;
     const password = this.state.passwordInput;
-    axios.post('http://localhost:5000/api/login', {username, password}, {withcredentials: true})
+    axios.post('http://localhost:5000/api/login', {username, password}, {withCredentials: true})
     .then((response) => {
 
       this.setState({
@@ -51,7 +51,7 @@ class User extends Component {
   signup(){
     const username = this.state.usernameInput;
     const password = this.state.passwordInput;
-    axios.post('http://localhost:5000/api/signup', {username, password}, {withcredentials: true})
+    axios.post('http://localhost:5000/api/signup', {username, password}, {withCredentials: true})
     .then((response) => {
 
       this.setState({
@@ -69,7 +69,7 @@ class User extends Component {
   logout(){
     const username = this.state.usernameInput;
     const password = this.state.passwordInput;
-    axios.post('http://localhost:5000/api/logout', {username, password}, {withcredentials: true})
+    axios.post('http://localhost:5000/api/logout', {username, password}, {withCredentials: true})
     .then((response) => {
 
       this.setState({
@@ -91,7 +91,7 @@ class User extends Component {
     if(this.state.loggedInUser) {
 
       return (
-        <div className="center">
+        <div className="add-task center">
 
           <h3>Welcome, {this.state.loggedInUser.username}</h3>
           <button onClick={()=>{this.logout()}} className="logOutButton"> Log Out </button>
@@ -99,15 +99,15 @@ class User extends Component {
         </div>
       );
 
-    } else {
-      return "User Component";
     }
   }
 
   fetchUser(){
+    console.log("fetching user")
     if( this.state.loggedInUser === null ) {
-      axios.get('http://localhost:5000/api/loggedin', {withcredentials: true})
+      axios.get('http://localhost:5000/api/loggedin', {withCredentials: true})
       .then((response) => {
+        console.log("fetch user then statement");
         this.setState({
           usernameInput: this.state.usernameInput,
           passwordInput: this.state.passwordInput,
@@ -116,6 +116,7 @@ class User extends Component {
 
       })
       .catch((err) => {
+        console.log("fetch user catch statement")
         this.setState({
           usernameInput: this.state.usernameInput,
           passwordInput: this.state.passwordInput,

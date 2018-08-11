@@ -103,9 +103,9 @@ class App extends Component {
         </div>
 
         <div className="add" >
-          <AddTask blah={() =>this.getAllTheTasks()}></AddTask>
-
           <User></User>
+
+          <AddTask blah={() =>this.getAllTheTasks()}></AddTask>
         </div>
 
         <div>
