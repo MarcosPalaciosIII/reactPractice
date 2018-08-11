@@ -9,6 +9,10 @@ const mongoose     = require('mongoose');
 const logger       = require('morgan');
 const path         = require('path');
 const cors         = require('cors');
+const LocalStrategy = require('passport-local').Strategy;
+const session    = require('express-session');
+const passport     = require('passport');
+
 
 
 mongoose.Promise = Promise;
@@ -38,7 +42,7 @@ app.use(require('node-sass-middleware')({
   dest: path.join(__dirname, 'public'),
   sourceMap: true
 }));
-      
+
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
