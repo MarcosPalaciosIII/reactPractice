@@ -4,6 +4,7 @@ import './App.css';
 import axios from 'axios';
 import AddTask from './addTask';
 import EditTask from './editTask';
+import User from './user';
 
 
 class App extends Component {
@@ -103,6 +104,8 @@ class App extends Component {
 
         <div className="add" >
           <AddTask blah={() =>this.getAllTheTasks()}></AddTask>
+
+          <User></User>
         </div>
 
         <div>
