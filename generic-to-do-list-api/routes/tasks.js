@@ -28,12 +28,12 @@ router.post('/tasks/create', (req, res, next)=>{
 });
 
 
-/// task details route here
+// task details route here
 
 
 
 
-/// edit task route here
+// edit task route here
 router.post('/tasks/edit/:id', (req, res, next) => {
   Task.findByIdAndUpdate(req.params.id, req.body)
   .then(response => {
@@ -56,7 +56,14 @@ router.delete('/tasks/delete/:id', (req, res, next) => {
   });
 });
 
+// signup route
 
 
+
+// login route
+
+
+
+// logout route
 
 module.exports = router;
