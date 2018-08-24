@@ -19,7 +19,6 @@ class User extends Component {
       usernameInput: e.target.value,
       passwordInput: this.state.passwordInput,
     });
-    console.log(this.state);
   }
 
   updatePassword(e){
@@ -27,7 +26,6 @@ class User extends Component {
       usernameInput: this.state.usernameInput,
       passwordInput: e.target.value,
     });
-    console.log(this.state);
   }
 
   login(){
@@ -67,9 +65,7 @@ class User extends Component {
   }
 
   logout(){
-    const username = this.state.usernameInput;
-    const password = this.state.passwordInput;
-    axios.post('http://localhost:5000/api/logout', {username, password}, {withCredentials: true})
+    axios.post('http://localhost:5000/api/logout', {}, {withCredentials: true})
     .then((response) => {
 
       this.setState({
@@ -103,11 +99,10 @@ class User extends Component {
   }
 
   fetchUser(){
-    console.log("fetching user")
+    console.log('-=-==-=--=-=-==-=-=-=-=-',this.state.loggedInUser)
     if( this.state.loggedInUser === null ) {
       axios.get('http://localhost:5000/api/loggedin', {withCredentials: true})
       .then((response) => {
-        console.log("fetch user then statement");
         this.setState({
           usernameInput: this.state.usernameInput,
           passwordInput: this.state.passwordInput,
@@ -116,7 +111,6 @@ class User extends Component {
 
       })
       .catch((err) => {
-        console.log("fetch user catch statement")
         this.setState({
           usernameInput: this.state.usernameInput,
           passwordInput: this.state.passwordInput,
@@ -130,10 +124,6 @@ class User extends Component {
     if( !this.state.loggedInUser ) {
       return(
         <div className="add-task center">
-
-          <h3> {this.showUser()} </h3>
-
-          {/* <div> Username Here </div> */}
 
           <labal> Username </labal>
           <input type="text" value={this.state.usernameInput} onChange={(e)=>{this.updateUsername(e)}} />

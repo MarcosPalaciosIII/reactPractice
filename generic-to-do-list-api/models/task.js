@@ -7,7 +7,8 @@ const Schema   = mongoose.Schema;
 const taskSchema = new Schema({
   title: String,
   description: String,
-  doneyet: Boolean  
+  doneyet: Boolean,
+  owner: Schema.Types.ObjectId
 });
 
 const Task = mongoose.model("Task", taskSchema);

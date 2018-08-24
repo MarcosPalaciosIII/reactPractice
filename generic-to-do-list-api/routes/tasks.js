@@ -14,10 +14,14 @@ router.get('/tasks', (req, res, next) => {
 });
 
 router.post('/tasks/create', (req, res, next)=>{
+  if(!req.user) {
+    return res.json({message: 'Sorry, you must be logged in to create a task!'});
+  }
     Task.create({
         title: req.body.title,
         description: req.body.description,
-        doneyet: req.body.doneyet
+        doneyet: req.body.doneyet,
+        owner: req.user._id
     })
     .then((response)=>{
         res.json(response);
@@ -56,14 +60,5 @@ router.delete('/tasks/delete/:id', (req, res, next) => {
   });
 });
 
-// signup route
-
-
-
-// login route
-
-
-
-// logout route
 
 module.exports = router;
