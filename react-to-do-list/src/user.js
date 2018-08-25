@@ -11,20 +11,28 @@ class User extends Component {
             loggedInUser: null,
         };
     }
+
+    componentWillReceiveProps(nextProps) {
+      console.log("====================== ", nextProps["theActualUser"]);
+      this.setState({...this.state, loggedInUser: nextProps["theActualUser"]})
+    };
+
+
     updatePassword(e){
         this.setState({
             usernameInput: this.state.usernameInput,
             passwordInput: e.target.value,
         });
-
-
     }
+
+
     updateUsername(e){
             this.setState({
                 usernameInput: e.target.value,
                 passwordInput: this.state.passwordInput,
             });
     }
+
 
     login(){
         const username = this.state.usernameInput;
@@ -40,6 +48,7 @@ class User extends Component {
         });
     }
 
+
     signup(){
         const username = this.state.usernameInput;
         const password = this.state.passwordInput;
@@ -54,20 +63,19 @@ class User extends Component {
         });
     }
 
-    logout(){
-        const username = this.state.usernameInput;
-        const password = this.state.passwordInput;
-        axios.post(`http://localhost:5000/api/logout`, {}, {withCredentials: true})
-        .then((response)=>{
-            this.setState({
-                usernameInput: '',
-                passwordInput: '',
-                loggedInUser:  null,
-            });
-            this.props.sendIt(null);
-        });
-
-    }
+    // logout(){
+    //     const username = this.state.usernameInput;
+    //     const password = this.state.passwordInput;
+    //     axios.post(`http://localhost:5000/api/logout`, {}, {withCredentials: true})
+    //     .then((response)=>{
+    //         this.setState({
+    //             usernameInput: '',
+    //             passwordInput: '',
+    //             loggedInUser:  null,
+    //         });
+    //         this.props.sendIt(null);
+    //     });
+    // }
 
     fetchUser(){
         if( this.state.loggedInUser === null ){
@@ -91,32 +99,32 @@ class User extends Component {
     }
 
 
-    showUser(){
-        this.fetchUser();
-        if(this.state.loggedInUser){
-           return (
-        <div>
-            <h3> Welcome, {this.state.loggedInUser.username} </h3>
-            <button onClick={()=>{this.logout()}} className="little-green-btn"> Log Out </button>
-        </div>
-           )
-
-        }else{
-            return   <h3> User Component </h3>
-        }
-    }
+    // showUser(){
+    //     this.fetchUser();
+    //     if(this.state.loggedInUser){
+    //        return (
+    //     <div>
+    //         <h3> Welcome, {this.state.loggedInUser.username} </h3>
+    //         <button onClick={()=>{this.logout()}} className="little-green-btn"> Log Out </button>
+    //     </div>
+    //        )
+    //
+    //     }else{
+    //         return   <h3> User Component </h3>
+    //     }
+    // }
 
     showForm(){
         if(!this.state.loggedInUser){
             return (
             <div>
-             <label> Username </label>
-            <input value = {this.state.usernameInput} onChange={(e)=>{this.updateUsername(e)}} type="text"/>
-            <label> Password </label>
-            <input value = {this.state.passwordInput} onChange={(e)=>{this.updatePassword(e)}} type="password"/>
+              <label> Username </label>
+              <input value = {this.state.usernameInput} onChange={(e)=>{this.updateUsername(e)}} type="text"/>
+              <label> Password </label>
+              <input value = {this.state.passwordInput} onChange={(e)=>{this.updatePassword(e)}} type="password"/>
 
-            <button  onClick={()=>{this.login()}} className="little-green-btn" > Log In </button>
-            <button onClick={()=>{this.signup()}} className="little-green-btn" > Create New Account </button>
+              <button  onClick={()=>{this.login()}} className="little-green-btn" > Log In </button>
+              <button onClick={()=>{this.signup()}} className="little-green-btn" > Create New Account </button>
            </div>
             )
         }
@@ -127,7 +135,7 @@ class User extends Component {
     render(){
         return(
             <div>
-             {this.showUser()}
+             {/* {this.showUser()} */}
              {this.showForm()}
             </div>
             )

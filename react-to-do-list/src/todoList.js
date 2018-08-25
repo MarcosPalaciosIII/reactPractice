@@ -36,7 +36,7 @@ class ToDoList extends Component {
   //           this.setState({
   //             theTasks: this.state.theTasks,
   //             showing: this.state.showing,
-  //               loggedInUser:  false,
+  //             loggedInUser:  false,
   //          });
   //       });
   //     }
@@ -135,14 +135,14 @@ class ToDoList extends Component {
     return (
       <div className="App">
       {/* {this.fetchUser()} */}
-    <h1 style={{margin: '80px'}}> The Single Greatest To-Do List In The History of Human History</h1>
+      <h1 style={{margin: '80px'}}> The Single Greatest To-Do List In The History of Human History</h1>
 
-    <div className="add">
-    <AddTask blah={()=>this.getAllTheTasks()}></AddTask>
+      <div className="add">
+      <AddTask blah={()=>this.getAllTheTasks()}></AddTask>
 
-    <User sendIt={this.props.sendTheUser}></User>
+      <User theActualUser={this.state.loggedInUser} sendIt={this.props.sendTheUser}></User>
 
-    </div>
+      </div>
 
       <div className="list">
       <h2> List of Tasks </h2>

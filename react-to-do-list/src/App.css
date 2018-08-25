@@ -13,15 +13,15 @@ body{
 nav {
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
   height: 7vh;
   background-color: lightslategray;
   padding: 0 5vw;
 }
 
-/* nav a {
+nav div a {
   padding-left: 2vw;
-} */
+}
 
 .list{
   float: left;

@@ -3,7 +3,7 @@ import './App.css';
 import axios from 'axios';
 // import AddTask from './addTask';
 // import EditTask from './editTask';
-import User from './user';
+// import User from './user';
 import ToDoList from './todoList';
 import { Link, Route } from 'react-router-dom';
 
@@ -47,6 +47,28 @@ class App extends Component {
   }
 
 
+  logout(){
+      axios.post(`http://localhost:5000/api/logout`, {}, {withCredentials: true})
+      .then((response)=>{
+          this.setState({
+              loggedInUser:  null,
+          });
+      });
+  }
+
+
+  showUser() {
+    if(this.state.loggedInUser){
+      return(
+        <div>
+          <span> Welcome, {this.state.loggedInUser.username} </span>
+          <button onClick={()=>{this.logout()}} className="little-green-btn"> Log Out </button>
+        </div>
+      )
+    }
+  }
+
+
   render() {
     return (
       <div>
@@ -54,8 +76,13 @@ class App extends Component {
         <div id="theBody">
 
           <nav>
-            <Link to="/">Home</Link>
-            <Link to="/todolist">To-Do List</Link>
+            <div>
+              <Link to="/">Home</Link>
+              <Link to="/todolist">To-Do List</Link>
+            </div>
+
+            {this.showUser()}
+
           </nav>
 
           <div>
