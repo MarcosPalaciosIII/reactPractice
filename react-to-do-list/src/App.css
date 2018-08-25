@@ -26,6 +26,13 @@ nav div a {
 .list{
   float: left;
   margin-left: 80px;
+  width: 35vw;
+}
+
+.list div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .add{
@@ -62,4 +69,11 @@ li{
   background-color: greenyellow;
   padding: 10px;
   margin: 0 5px;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }

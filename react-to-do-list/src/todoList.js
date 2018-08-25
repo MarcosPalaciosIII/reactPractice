@@ -117,9 +117,9 @@ class ToDoList extends Component {
         this.state.theTasks.map((task, index) => {
           return(
         <div key={index}>
-          {this.seeIfTaskBelongsToUser(task, index)}
         <h3>{task.title}</h3>
         <p style={{maxWidth: '400px'}} >{task.description} </p>
+        {this.seeIfTaskBelongsToUser(task, index)}
         {this.renderForm(index, task._id, task.title, task.description)}
 
 
@@ -135,10 +135,12 @@ class ToDoList extends Component {
     return (
       <div className="App">
       {/* {this.fetchUser()} */}
-      <h1 style={{margin: '80px'}}> The Single Greatest To-Do List In The History of Human History</h1>
+      <h1 style={{textAlign: 'center'}}> The Single Greatest To-Do List In The History of Human History</h1>
 
       <div className="add">
       <AddTask blah={()=>this.getAllTheTasks()}></AddTask>
+
+      <br/>
 
       <User theActualUser={this.state.loggedInUser} sendIt={this.props.sendTheUser}></User>
 
