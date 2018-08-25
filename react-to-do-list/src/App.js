@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios';
-import AddTask from './addTask';
-import EditTask from './editTask';
+// import AddTask from './addTask';
+// import EditTask from './editTask';
 import User from './user';
 import ToDoList from './todoList';
 import { Link, Route } from 'react-router-dom';
@@ -10,11 +10,12 @@ import { Link, Route } from 'react-router-dom';
 
 class App extends Component {
   constructor(props){
-    super(props)
+    super(props);
     this.state = {
 
       loggedInUser: null,
     };
+      // console.log("this is the state", this.state);
   }
 
 
@@ -40,27 +41,48 @@ class App extends Component {
 
 
     getUserFromUserComponent = (userObj)=>{
-      console.log("getting user from user component to app", userObj)
+      // console.log("getting user from user component to app", userObj);
 
       this.setState({loggedInUser: userObj});
-
-      console.log(this.state)
   }
-
-
 
 
   render() {
     return (
       <div>
 
-        <nav>
-          <Link to="/todolist">To-Do List</Link>
-        </nav>
+        <div id="theBody">
 
-        <div>
-          <Route path="/todolist" component={ToDoList}/>
+          <nav>
+            <Link to="/">Home</Link>
+            <Link to="/todolist">To-Do List</Link>
+          </nav>
+
+          <div>
+            <Route path="/todolist" render={()=><ToDoList sendTheUser={this.getUserFromUserComponent} theActualUser={this.state.loggedInUser}/>}/>
+          </div>
         </div>
+
+
+        <div className="footer">
+            <ul>
+              <h4>Copyright AF</h4>
+              <li> This Page is Beautiful </li>
+              <li> This Page is a strong, self-loving individual </li>
+              </ul>
+
+              <ul>
+            <h4> All Rights Reserved </h4>
+            <li> Property of me cause I chill and you don't even know how to chill </li>
+
+            </ul>
+
+            <ul>
+              <h4> External Resources </h4>
+              <li> Check our the Docs </li>
+            </ul>
+        </div>
+
       </div>
     );
   }

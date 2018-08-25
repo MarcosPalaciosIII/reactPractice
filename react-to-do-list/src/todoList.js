@@ -12,39 +12,44 @@ class ToDoList extends Component {
     this.state = {
       theTasks: null,
       showing: false,
-      loggedInUser: null,
+      loggedInUser: this.props.theActualUser,
     };
   }
 
-
-  fetchUser(){
-    if( this.state.loggedInUser === null ){
-        axios.get(`http://localhost:5000/api/loggedin`, {withCredentials: true})
-        .then((response)=>{
-            this.setState({
-                theTasks: this.state.theTasks,
-                showing: this.state.showing,
-                loggedInUser:  response.data,
-           });
-        })
-        .catch((err)=>{
-            this.setState({
-              theTasks: this.state.theTasks,
-              showing: this.state.showing,
-                loggedInUser:  false,
-           });
-        });
-    }
-}
+  componentWillReceiveProps(nextProps) {
+    console.log("====================== ", nextProps["theActualUser"]);
+    this.setState({...this.state, loggedInUser: nextProps["theActualUser"]})
+  };
 
 
-    getUserFromUserComponent = (userObj)=>{
-      console.log("getting user from user component to app", userObj)
+  // fetchUser(){
+  //   if( this.state.loggedInUser === null ){
+  //       axios.get(`http://localhost:5000/api/loggedin`, {withCredentials: true})
+  //       .then((response)=>{
+  //           this.setState({
+  //               theTasks: this.state.theTasks,
+  //               showing: this.state.showing,
+  //               loggedInUser:  response.data,
+  //          });
+  //       })
+  //       .catch((err)=>{
+  //           this.setState({
+  //             theTasks: this.state.theTasks,
+  //             showing: this.state.showing,
+  //               loggedInUser:  false,
+  //          });
+  //       });
+  //     }
+  // }
 
-      this.setState({loggedInUser: userObj});
 
-      console.log(this.state)
-  }
+  //   getUserFromUserComponent = (userObj)=>{
+  //     console.log("getting user from user component to app", userObj)
+  //
+  //     this.setState({loggedInUser: userObj});
+  //
+  //     console.log(this.state)
+  // }
 
   getAllTheTasks(){
     axios.get("http://localhost:5000/api/tasks", {withCredentials: true})
@@ -129,13 +134,13 @@ class ToDoList extends Component {
   render() {
     return (
       <div className="App">
-      {this.fetchUser()}
+      {/* {this.fetchUser()} */}
     <h1 style={{margin: '80px'}}> The Single Greatest To-Do List In The History of Human History</h1>
 
     <div className="add">
     <AddTask blah={()=>this.getAllTheTasks()}></AddTask>
 
-    <User sendIt={this.getUserFromUserComponent}></User>
+    <User sendIt={this.props.sendTheUser}></User>
 
     </div>
 
@@ -144,24 +149,7 @@ class ToDoList extends Component {
         {this.showTasks()}
       </div>
 
-  <div className="footer">
-      <ul>
-        <h4>Copyright AF</h4>
-        <li> This Page is Beautiful </li>
-        <li> This Page is a strong, self-loving individual </li>
-        </ul>
 
-        <ul>
-      <h4> All Rights Reserved </h4>
-      <li> Property of me cause I chill and you don't even know how to chill </li>
-
-      </ul>
-
-      <ul>
-        <h4> External Resources </h4>
-        <li> Check our the Docs </li>
-      </ul>
-  </div>
   </div>
     );
   }
