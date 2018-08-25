@@ -1,129 +1,176 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
 import AddTask from './addTask';
-import EditTask from './editTask';
-import User from './user';
+import EditTask from './editTask'
+import User from './user'
 
 
 class App extends Component {
-
-  constructor(props) {
-    super(props);
+  constructor(props){
+    super(props)
     this.state = {
-      theTasks: [],
+      theTasks: null,
       showing: false,
-    };
+      loggedInUser: null,
+    }
   }
 
-  addOneTask(taskToAdd) {
-    console.log("adding one task!!!!!");
-    const currentArray = this.state.theTasks.slice();
-    currentArray.push(taskToAdd);
-    this.setState({theTasks: currentArray});
+
+  fetchUser(){
+    if( this.state.loggedInUser === null ){  
+        axios.get(`http://localhost:5000/api/loggedin`, {withCredentials: true})
+        .then((response)=>{
+            this.setState({
+                theTasks: this.state.theTasks,
+                showing: this.state.showing,
+                loggedInUser:  response.data,
+           }) 
+        })
+        .catch((err)=>{
+            this.setState({
+              theTasks: this.state.theTasks,
+              showing: this.state.showing,
+                loggedInUser:  false,
+           }) 
+        })
+    }
+}
+
+
+    getUserFromUserComponent = (userObj)=>{
+      console.log("getting user from user component to app", userObj)
+      
+      this.setState({loggedInUser: userObj});
+      
+      console.log(this.state)
   }
 
   getAllTheTasks(){
-    axios.get("http://localhost:5000/api/tasks")
-    .then(allTheTasks => {
-      console.log(allTheTasks);
-      this.setState({theTasks: allTheTasks.data, showing: false});
+    axios.get("http://localhost:5000/api/tasks", {withCredentials: true})
+    .then((allTheTasks)=>{
+      this.setState({theTasks: allTheTasks.data, showing: false, loggedInUser: this.state.loggedInUser})
     })
-    .catch(err => {
-      console.log(err);
-    });
+    .catch((err)=>{
+      console.log(err)
+    })
   }
 
 
-  toggleEditForm(whichTask) {
-    if(this.state.showing === whichTask) {
-        this.setState({theTasks: this.state.theTasks, showing: false});
-    } else {
+  toggleEditForm(whichTask){
+    if(this.state.showing === whichTask){
+      this.setState({theTasks: this.state.theTasks, showing: false});
+    } else{
       this.setState({theTasks: this.state.theTasks, showing: whichTask});
     }
   }
 
-  renderForm(theIndex, theTaskID, theTitle, theDescription) {
-    if(this.state.showing === theIndex) {
-      return(
-
-        <EditTask blah={() =>this.getAllTheTasks()} taskProp={theTaskID} title={theTitle} description={theDescription}></EditTask>
+  renderForm(theIndex, theTaskID, theTitle, theDesc){
+    if(this.state.showing === theIndex){
+        return(
+          <EditTask blah={()=>this.getAllTheTasks()} taskProp={theTaskID} title={theTitle} desc={theDesc}></EditTask>
       )
     }
   }
 
-  deleteTask(theIdOfTheTask) {
-    axios.delete(`http://localhost:5000/api/tasks/delete/${theIdOfTheTask}`, {})
-    .then(res => {
-      console.log(res);
-      this.getAllTheTasks();
-    })
-    .catch(err => {
-      console.log(err);
-    });
-  }
+    deleteTask(theIdOfTheTask){
+      axios.post(`http://localhost:5000/api/tasks/delete/${theIdOfTheTask}`, {}, {withCredentials: true})
+      .then((response)=>{
+        console.log(response);
+        this.getAllTheTasks();
+      })
+      .catch((err)=>{
+        console.log(err)
+      })
+    }
 
-  showTasks() {
-    if(this.state.theTasks.length === 0) {
-      this.getAllTheTasks();
+    seeIfTaskBelongsToUser(task, index){
+      if(this.state.loggedInUser && task.owner == this.state.loggedInUser._id){
+        return (
+          <div>
+          <button onClick={()=>{this.deleteTask(task._id)}} style={{float:'right', backgroundColor: 'red', padding: '10px', margin: '0 5px'}}>
+          Delete Task
+          </button>
+        <button onClick={()=>this.toggleEditForm(index)} style={{float:'right', backgroundColor: 'greenyellow', padding: '10px',  margin: '0 5px'}}> 
+        Edit This Task 
+        </button>
+        </div>
+        )
+      } 
     }
 
 
-    return (
-      this.state.theTasks.map((task, index) => {
-        return(
-          <div key={index} className="allTasks">
 
-            <div className="center taskInfo">
-              <div>
-                <button onClick={()=>this.deleteTask(task._id)} style={{float:'right', backgroundColor:'maroon', color:'aqua', padding:'5px', marginLeft:'5px'}}> Delete Task </button>
-                <button onClick={()=>this.toggleEditForm(index)} style={{float:'right', backgroundColor:'lightgreen', color:'maroon', padding:'5px'}}> Edit Task </button>
-              </div>
-              <h3>{task.title}</h3>
-              <p>{task.description}</p>
-            </div>
-            <hr />
-            <div className="center taskEdit">
-            {this.renderForm(index, task._id, task.title, task.description)}
-            </div>
-          </div>
-        )
-      })
-    )
+  showTasks(){
+    if(this.state.theTasks === null){
+      this.getAllTheTasks();
+    }
+
+    if(this.state.theTasks){
+
+      return (
+        this.state.theTasks.map((task, index) => {
+          return(
+        <div key={index}>
+          {this.seeIfTaskBelongsToUser(task, index)}
+        <h3>{task.title}</h3>
+        <p style={{maxWidth: '400px'}} >{task.description} </p>
+        {this.renderForm(index, task._id, task.title, task.description)}
+
+      
+        </div>
+          ) 
+        })
+      )
+    } // closes the if statement
   }
+
 
   render() {
     return (
+      <div className="App">
+      {this.fetchUser()}
+    <h1 style={{margin: '80px'}}> The Single Greatest To-Do List In The History of Human History</h1>
+    
+    <div className="add">
+    <AddTask blah={()=>this.getAllTheTasks()}></AddTask>
 
-      <div className="app" >
+    <User sendIt={this.getUserFromUserComponent}></User>
 
-        <div className="center">
-          <h1> The Greatest Sing To Do List of All Time </h1>
-        </div>
+    </div>
 
-        <div className="add" >
-          <User></User>
-
-          <AddTask blah={() =>this.getAllTheTasks()}></AddTask>
-        </div>
-
-        <div>
-
-          <div className="center">
-            <h2> The To Do List </h2>
-          </div>
-
-          <div className="list center">
-            {this.showTasks()}
-          </div>
-
-        </div>
-
+      <div className="list">
+      <h2> List of Tasks </h2>
+        {this.showTasks()}
       </div>
+
+  <div className="footer">
+      <ul> 
+        <h4>Copyright AF</h4>
+        <li> This Page is Beautiful </li>
+        <li> This Page is a strong, self-loving individual </li>
+        </ul>
+
+        <ul>
+      <h4> All Rights Reserved </h4>
+      <li> Property of me cause I chill and you don't even know how to chill </li>
+
+      </ul>
+
+      <ul>
+        <h4> External Resources </h4>
+        <li> Check our the Docs </li>
+      </ul>
+  </div>
+  </div>
     );
   }
 }
+
+
+
+
+
 
 
 export default App;

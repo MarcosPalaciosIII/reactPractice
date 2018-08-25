@@ -2,71 +2,62 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 
+
 class AddTask extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            titleInput: '',
+            descInput: '',
+        }
+    }
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      titleInput: '',
-      descriptionInput: '',
-    };
-  }
+    addTask(){
 
-  addTask(){
+        axios.post("http://localhost:5000/api/tasks/create",{title: this.state.titleInput,description: this.state.descInput}, {withCredentials: true})
+        .then((res)=>{
+            console.log(res)
+            this.props.blah();
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
 
-    console.log(this.state.titleInput);
-    console.log(this.state.descriptionInput);
+        this.setState({titleInput: '', descInput:''});
+    }
 
-    axios.post("http://localhost:5000/api/tasks/create", {
-      title: this.state.titleInput,
-      description: this.state.descriptionInput,
-    })
-    .then(res => {
-      console.log(res);
-      this.props.blah();
-    })
-    .catch(err => {
-      console.log(err);
-    });
+    updateTitle(e){
+        this.setState({
+            titleInput: e.target.value,
+            descInput: this.state.descInput
+        })
 
-    this.setState({titleInput: '', descriptionInput: ''});
-  }
+    }
 
-updateTitle(e) {
-  this.setState({
-    titleInput: e.target.value,
-    descriptionInput: this.state.descriptionInput,
-  });
-}
+    updateDescription(e){
+        this.setState({
+            titleInput: this.state.titleInput,
+            descInput: e.target.value,
+        })
+    }
 
-updateDescription(e) {
-  this.setState({
-    titleInput: this.state.titleInput,
-    descriptionInput: e.target.value,
-  });
-}
 
-  render() {
-    return (
-      <div className="add-task center" >
-        <h3> Add A New Task </h3>
-
+    render(){
+      return(
+      <div className="add-task">
+        <h3> Add a New Task </h3>
         <label> Title </label>
-        <input type="text" value={this.state.titleInput} onChange={(e) =>{this.updateTitle(e)}} />
-
-        <br />
-
+        <input value={this.state.titleInput} onChange={(e)=>{this.updateTitle(e)}} type="text"/> 
+  
         <label> Description </label>
-        <input type="text" value={this.state.descriptionInput} onChange={(e) =>{this.updateDescription(e)}} />
-
-        <br />
-
-        <button className="addTaskButton" onClick={()=>{this.addTask()}}> Submit </button>
+        <textarea rows="10" cols="25" value={this.state.descInput}  onChange={(e)=>{this.updateDescription(e)}} type="text"/> 
+  
+        <button className="grn-btn" onClick={()=>{this.addTask()}} > Submit New Task </button>
+  
       </div>
-    )
+      )
+    }
+  
   }
-}
 
-
-
-export default AddTask
+  export default AddTask

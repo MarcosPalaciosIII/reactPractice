@@ -3,153 +3,132 @@ import axios from 'axios';
 
 
 class User extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      usernameInput: '',
-      passwordInput: '',
-      loggedInUser: null,
-    };
-  }
-
-
-  updateUsername(e){
-    this.setState({
-      usernameInput: e.target.value,
-      passwordInput: this.state.passwordInput,
-    });
-  }
-
-  updatePassword(e){
-    this.setState({
-      usernameInput: this.state.usernameInput,
-      passwordInput: e.target.value,
-    });
-  }
-
-  login(){
-    const username = this.state.usernameInput;
-    const password = this.state.passwordInput;
-    axios.post('http://localhost:5000/api/login', {username, password}, {withCredentials: true})
-    .then((response) => {
-
-      this.setState({
-        usernameInput: '',
-        passwordInput: '',
-        loggedInUser: response.data,
-      });
-
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  }
-
-  signup(){
-    const username = this.state.usernameInput;
-    const password = this.state.passwordInput;
-    axios.post('http://localhost:5000/api/signup', {username, password}, {withCredentials: true})
-    .then((response) => {
-
-      this.setState({
-        usernameInput: '',
-        passwordInput: '',
-        loggedInUser: response.data,
-      });
-
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  }
-
-  logout(){
-    axios.post('http://localhost:5000/api/logout', {}, {withCredentials: true})
-    .then((response) => {
-
-      this.setState({
-        usernameInput: '',
-        passwordInput: '',
-        loggedInUser: null,
-      });
-
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  }
-
-
-
-  showUser(){
-    this.fetchUser();
-    if(this.state.loggedInUser) {
-
-      return (
-        <div className="add-task center">
-
-          <h3>Welcome, {this.state.loggedInUser.username}</h3>
-          <button onClick={()=>{this.logout()}} className="logOutButton"> Log Out </button>
-
-        </div>
-      );
-
+    constructor(props){
+        super(props)
+        this.state = {
+            usernameInput: '',
+            passwordInput: '',
+            loggedInUser: null,
+        }
     }
-  }
-
-  fetchUser(){
-    console.log('-=-==-=--=-=-==-=-=-=-=-',this.state.loggedInUser)
-    if( this.state.loggedInUser === null ) {
-      axios.get('http://localhost:5000/api/loggedin', {withCredentials: true})
-      .then((response) => {
+    updatePassword(e){
         this.setState({
-          usernameInput: this.state.usernameInput,
-          passwordInput: this.state.passwordInput,
-          loggedInUser: response.data,
-        });
-
-      })
-      .catch((err) => {
-        this.setState({
-          usernameInput: this.state.usernameInput,
-          passwordInput: this.state.passwordInput,
-          loggedInUser: false,
-        });
-      })
+            usernameInput: this.state.usernameInput,
+            passwordInput: e.target.value,
+        })
+       
+ 
     }
-  }
+    updateUsername(e){
+            this.setState({
+                usernameInput: e.target.value,
+                passwordInput: this.state.passwordInput,
+            })
+    }
 
-  showlogInForm() {
-    if( !this.state.loggedInUser ) {
-      return(
-        <div className="add-task center">
+    login(){
+        const username = this.state.usernameInput;
+        const password = this.state.passwordInput;
+        axios.post(`http://localhost:5000/api/login`, {username, password }, {withCredentials: true})
+        .then((response)=>{
+            this.setState({
+                usernameInput: '',
+                passwordInput: '',
+                loggedInUser:  response.data,
+            }) 
+            this.props.sendIt(response.data)
+        })
+    }
 
-          <labal> Username </labal>
-          <input type="text" value={this.state.usernameInput} onChange={(e)=>{this.updateUsername(e)}} />
-          <br />
-          <labal> Password </labal>
-          <input type="password" value={this.state.passwordInput} onChange={(e)=>{this.updatePassword(e)}} />
-          <br />
-          <button onClick={()=>{this.login()}} className="logIn-signUp-button"> Log In </button>
-          <button onClick={()=>{this.signup()}} className="logIn-signUp-button"> Sign Up </button>
+    signup(){
+        const username = this.state.usernameInput;
+        const password = this.state.passwordInput;
+        axios.post(`http://localhost:5000/api/signup`, {username, password }, {withCredentials: true})
+        .then((response)=>{
+            this.setState({
+                usernameInput: '',
+                passwordInput: '',
+                loggedInUser:  response.data,
+            }) 
+        })
+    }
 
+    logout(){
+        const username = this.state.usernameInput;
+        const password = this.state.passwordInput;
+        axios.post(`http://localhost:5000/api/logout`, {}, {withCredentials: true})
+        .then((response)=>{
+            this.setState({
+                usernameInput: '',
+                passwordInput: '',
+                loggedInUser:  null,
+            }) 
+        })
+
+    }
+
+    fetchUser(){
+        if( this.state.loggedInUser === null ){  
+            axios.get(`http://localhost:5000/api/loggedin`, {withCredentials: true})
+            .then((response)=>{
+                this.setState({
+                    usernameInput: this.state.usernameInput,
+                    passwordInput: this.state.passwordInput,
+                    loggedInUser:  response.data,
+               }) 
+            })
+            .catch((err)=>{
+                this.setState({
+                    usernameInput: this.state.usernameInput,
+                    passwordInput: this.state.passwordInput,
+                    loggedInUser:  false,
+               }) 
+            })
+        }
+    }
+
+
+    showUser(){
+        this.fetchUser();
+        if(this.state.loggedInUser){
+           return (
+        <div>
+            <h3> Welcome, {this.state.loggedInUser.username} </h3>
+            <button onClick={()=>{this.logout()}} className="little-green-btn"> Log Out </button>
         </div>
-      )
+           )
+               
+        }else{
+            return   <h3> User Component </h3>
+        }
     }
-  }
 
+    showForm(){
+        if(!this.state.loggedInUser){
+            return (
+            <div>
+             <label> Username </label>
+            <input value = {this.state.usernameInput} onChange={(e)=>{this.updateUsername(e)}} type="text"/>
+            <label> Password </label>
+            <input value = {this.state.passwordInput} onChange={(e)=>{this.updatePassword(e)}} type="password"/>
+            
+            <button  onClick={()=>{this.login()}} className="little-green-btn" > Log In </button>
+            <button onClick={()=>{this.signup()}} className="little-green-btn" > Create New Account </button> 
+           </div>
+            )
+        }
+    }
 
-  render(){
-    return(
-      <div>
-        {this.showlogInForm()}
-        {this.showUser()}
-      </div>
-    )
-  }
+    
 
-
+    render(){
+        return(
+            <div>
+             {this.showUser()}
+             {this.showForm()}
+            </div>
+            )
+    }
 }
 
 

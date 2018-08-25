@@ -40,5 +40,3 @@ passport.deserializeUser((userIdFromSession, cb) => {
       next(null, foundUser);
     });
   }));
-
-

@@ -1,71 +1,67 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+
+
 class EditTask extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      titleInput: this.props.title,
-      descriptionInput: this.props.description,
-    };
-  }
+    constructor(props){
+        super(props)
+        this.state = {
+            titleInput: this.props.title,
+            descInput: this.props.desc,
+        }
+    }
 
-  updateTitle(e) {
-    this.setState({
-      titleInput: e.target.value,
-      descriptionInput: this.state.descriptionInput,
-    });
-  }
+    submitChanges(){
+        axios.post(`http://localhost:5000/api/tasks/edit/${this.props.taskProp}`,
+         {title: this.state.titleInput, description: this.state.descInput},
+         {withCredentials: true})
+        .then((res)=>{
+            console.log(res)
+            this.setState({titleInput:'', descInput: ''})
+            this.props.blah()
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+    }
 
-  updateDescription(e) {
-    this.setState({
-      titleInput: this.state.titleInput,
-      descriptionInput: e.target.value,
-    });
-  }
+    updateTitle(e){
+        this.setState({
+            titleInput: e.target.value,
+            descInput: this.state.descInput
+        })
 
-  submitChanges() {
-    console.log(this.props.taskProp, this.state.titleInput, this.state.descriptionInput);
-    axios.post(`http://localhost:5000/api/tasks/edit/${this.props.taskProp}`, {
-      title: this.state.titleInput,
-      description: this.state.descriptionInput,
-    })
-    .then(res => {
-      console.log(res);
-      this.setState({titleInput: '', descriptionInput: ''});
-      this.props.blah();
-    })
-    .catch(err => {
-      console.log(err);
-    });
-  }
+    }
 
-  render(){
-    return (
-      <div className="edit-task center" >
+    updateDescription(e){
+        this.setState({
+            titleInput: this.state.titleInput,
+            descInput: e.target.value,
+        })
+    }
+
+
+    render(){
+        return(
+        <div className="edit-task">
         <h3> Edit This Task </h3>
-
-        <label> Update Title </label>
-        <input type="text" value={this.state.titleInput} onChange={(e) =>{this.updateTitle(e)}} />
-
-        <br />
-
-        <label> Update Description </label>
-        <input type="text" value={this.state.descriptionInput} onChange={(e) =>{this.updateDescription(e)}} />
-
-        <br />
-
-        <button onClick={()=>{this.submitChanges()}} > Save Change </button>
-      </div>
-    )
-  }
+        <label> Title </label>
+        <input value={this.state.titleInput} onChange={(e)=>{this.updateTitle(e)}}  type="text"/> 
+  
+        <label> Description </label>
+        <input value={this.state.descInput}  onChange={(e)=>{this.updateDescription(e)}}  type="text"/> 
+  
+        <button onClick={()=>this.submitChanges()}> Save Changes </button>
+  
+        </div>
+        )
+    }
 
 
 
 
 
 }
-
-
 
 export default EditTask;

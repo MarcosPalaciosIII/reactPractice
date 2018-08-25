@@ -1,0 +1,81 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.add-task {
+  padding-right: 50px;
+}
+
+.allTasks {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 40%;
+  height: 190px;
+}
+
+.addTaskButton {
+  background-color: aqua;
+  font-size: 30px;
+  padding: 5px;
+  color: maroon;
+}
+
+.addTaskButton:hover {
+  border-color: darkgreen;
+  box-shadow: 3px 3px 3px 3px orange;
+}
+
+.addTaskButton:active {
+  box-shadow: 3px 3px 3px 3px maroon;
+}
+
+.app {
+  padding: 20px;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.list {
+  float: left;
+  width: 80vw;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.add {
+  float: right;
+}
+
+.taskInfo {
+  float: left;
+  width: 49%
+}
+
+.taskEdit {
+  float: right;
+  width: 49%
+}
+
+.logIn-signUp-button {
+  background-color: forestgreen;
+  font-size: 20px;
+  padding: 5px;
+  color: maroon;
+  border-radius: 45%;
+}
+
+.logOutButton {
+  background-color: maroon;
+  font-size: 20px;
+  padding: 5px;
+  color: lightgreen;
+  border-radius: 45%;
+}
