@@ -1,0 +1,23 @@
+[
+  {
+      "id": "1a",
+      "name": "Simon (GIF attack Edition)",
+      "year": 2017,
+      "technologies": "JavaScript, jQuery",
+      "description": "The first project game clone."
+  },
+  {
+      "id": "2b",
+      "name": "The Language Shop",
+      "year": 2017,
+      "technologies": "Mongo DB, ExpressJS, NodeJS, JavaScript, HTML, CSS",
+      "description": "Web App that allows logged in users to share their experiences about programming technologies"
+  },
+  {
+      "id": "3c",
+      "name": "Drinkologist",
+      "year": 2017,
+      "technologies": "Mongo DB, ExpressJS, Angular2, NodeJS, JavaScript, HTML, CSS",
+      "description": "Web App that allows logged in users to add and search for cocktails as well as the recipe."
+  }
+]
